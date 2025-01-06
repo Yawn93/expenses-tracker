@@ -7,6 +7,7 @@ import {useNavigate} from 'react-router-dom'
 import {auth} from "../../config/firebase-config";
 import { doc, deleteDoc, getDocs, writeBatch, collection } from "firebase/firestore";
 import { db } from "../../config/firebase-config"; 
+import './styles.css';
 
 export const Expenses = () => {
 
@@ -72,83 +73,110 @@ export const Expenses = () => {
     
 
     return (
-        <>
-    <div className="expense-tracker">
-
-        <div className="container">
-        <h1> {userName}'s Expense Tracker</h1>
-        <div className="balance">
-            <h3>Your balance</h3>
-            {balance >= 0 ? <h2>{balance}€</h2> : <h2>-{balance * -1}€</h2>}
-        </div>
-        <div className="summary">
-            <div className="income">
-                <h4>Income</h4>
-                <p>{income}€</p>
+        <div className="expense-tracker">
+            {/* Header Section */}
+            <header className="header">
+                <h1>{userName}'s Expense Tracker</h1>
+                {profilePhoto && (
+                    <div className="profile">
+                        <img className="profile-photo" src={profilePhoto} alt="Profile" />
+                        <span>{userName}</span>
+                        <button className="sign-out-btn" onClick={signUserOut}>Sign Out</button>
+                    </div>
+                )}
+            </header>
+    
+            {/* Balance and Summary Section */}
+            <div className="summary-container">
+                <div className="balance-card">
+                    <h2 style={{ color: balance >= 0 ? "green" : "#E35F6F" }}>{balance}€</h2>
+                    <p>Balance</p>
+                </div>
+                <div className="income-card">
+                    <h2>{income}€</h2>
+                    <p>Income</p>
+                </div>
+                <div className="expenses-card">
+                    <h2>{expenses}€</h2>
+                    <p>Expenses</p>
+                </div>
             </div>
-            <div className="expenses">
-            <h4>Expenses</h4>
-            <p>{expenses}€</p>
+    
+            {/* Add Transaction Form */}
+            <div className="add-transaction-form">
+                <h3>Add a new expense/income</h3>
+                <form onSubmit={onSubmit}>
+                    <input
+                        type="text"
+                        required
+                        placeholder="Name"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                    />
+                    <input
+                        type="number"
+                        required
+                        placeholder="Amount"
+                        value={transactionAmount}
+                        onChange={(e) => setTransactionAmount(e.target.value)}
+                    />
+                    <div className="transaction-type">
+                        <div>
+                        <label>
+                            <input
+                                type="radio"
+                                id="expense"
+                                value="expense"
+                                checked={transactionType === 'expense'}
+                                onChange={(e) => setTransactionType(e.target.value)}
+                            />
+                            Expense
+                        </label>
+                        <label>
+                            <input
+                                type="radio"
+                                id="income"
+                                value="income"
+                                checked={transactionType === 'income'}
+                                onChange={(e) => setTransactionType(e.target.value)}
+                            />
+                            Income
+                        </label>
+                        </div>
+                        <div>
+                        <button type="submit" className="add-btn">Add</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+    
+            {/* Transactions List Section */}
+            <div className="transactions-list">
+                <div className="header-transactions">
+                    <h3>List of expenses/incomes</h3>
+                    <button onClick={handleClearAll} className="clear-all-btn">Clear All</button>
+                </div>
+                <ul>
+                    {transactions.map((transaction) => (
+                        <li key={transaction.id} className="transaction-item">
+                            <div className="transaction-info">
+                                <span>{transaction.description}</span>
+                                <span style={{ color: transaction.transactionType === "expense" ? "#E35F6F" : "#45a049" }}>
+                                    {transaction.transactionType}
+                                </span>
+                                <span>{transaction.transactionAmount}€</span>
+                            </div>
+                            <button
+                                className="delete-btn"
+                                onClick={() => handleDeleteTransaction(transaction.id)}
+                            >
+                                x
+                            </button>
+                        </li>
+                    ))}
+                </ul>
             </div>
         </div>
-        <form className="add-transaction" onSubmit={onSubmit}>
-            <input
-            type="text"
-            required
-            placeholder="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            />
-            <input
-            type="number"
-            required
-            placeholder="Amount"
-            value={transactionAmount}
-            onChange={(e) => setTransactionAmount(e.target.value)}
-            />
-            <input
-            type="radio"
-            id="expense"
-            value="expense"
-            checked={transactionType === 'expense'}
-            onChange={(e) => setTransactionType(e.target.value)}
-            />
-            <label htmlFor="expense">Expenses</label>
-            <input
-            type="radio"
-            id="income"
-            value="income"
-            checked={transactionType === 'income'}
-            onChange={(e) => setTransactionType(e.target.value)}
-            />
-            <label htmlFor="income">Income</label>
-
-            <button type="submit">Add Transaction</button>
-        </form>
-        </div>
-        {profilePhoto && (
-            <div className="profile">
-                <img className="profile-photo" src={profilePhoto}/>
-                <button className="sign-out-btn" onClick={signUserOut}>Sign Out</button>
-            </div>
-        )}
-    </div>
-    <div className="transactions">
-        <h3>List of Transactions</h3>
-        <ul>
-            {transactions.map((transaction) => {
-                return (
-                <li key={transaction.id}>
-                    <h4>{transaction.description}</h4>
-                    <p>{transaction.transactionAmount} €</p>
-                    <p style={{color: transaction.transactionType === "expense" ? "red" : "green"}}>{transaction.transactionType}</p>
-                    <button onClick={() => handleDeleteTransaction(transaction.id)}>x</button> {/* Delete button */}
-                </li>
-                );
-            })}
-        </ul>
-        <button onClick={handleClearAll} className="clear-all-btn">Clear All</button> {/* Clear All button */}
-    </div>
-    </>
     );
+    
 }
