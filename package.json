@@ -2,6 +2,7 @@
   "name": "expenses-tracker",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://expenses-tracker-212.netlify.app/",
   "dependencies": {
     "cra-template": "1.2.0",
     "firebase": "^11.1.0",
