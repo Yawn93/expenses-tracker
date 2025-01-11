@@ -1,12 +1,12 @@
 {
   "name": "expenses-tracker",
   "version": "0.1.0",
-  "private": true,
-  "homepage": "https://expenses-tracker-212.netlify.app/",
+  "homepage": "https://yawn93.github.io/expenses-tracker/",
   "dependencies": {
     "cra-template": "1.2.0",
     "firebase": "^11.1.0",
     "firebase-tools": "^13.29.1",
+    "gh-pages": "^6.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.1.1",
@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "echo 'Building for production' && react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
