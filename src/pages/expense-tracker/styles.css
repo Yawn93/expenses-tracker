@@ -1,0 +1,294 @@
+.expense-tracker {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header Section */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0;
+    font-family: "Krona One", serif;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.profile-photo {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.profile span {
+    font-size: 16px;
+    margin-right: 15px;
+}
+
+.sign-out-btn {
+    background: transparent;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sign-out-btn:hover {
+    background-color: #333333;
+}
+
+/* Summary Section */
+.summary-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.balance-card, .income-card, .expenses-card {
+    flex: 1;
+    background-color: #1c1c1c;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: calc(33.33% - 20px);
+}
+
+.balance-card h2, .income-card h2, .expenses-card h2 {
+    margin: 10px 0 5px;
+    font-size: 24px;
+    font-family: "Krona One", serif;
+}
+
+.balance-card p, .income-card p, .expenses-card p {
+    margin: 0;
+    font-size: 16px;
+    color: #888888; /* Light gray text */
+}
+
+/* Add Transaction Form */
+.add-transaction-form {
+    background-color: #1c1c1c;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.add-transaction-form h3 {
+    margin-top: 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.add-transaction-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.add-transaction-form input[type="text"],
+.add-transaction-form input[type="number"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #333333;
+    border-radius: 5px;
+    background-color: #0f0f0f;
+    color: #ffffff;
+}
+
+.add-transaction-form input[type="radio"] {
+    margin-right: 10px;
+}
+
+.add-transaction-form input[value="income"] {
+    margin-left: 16px;
+}
+
+.transaction-type {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 16px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.add-btn {
+    background-color: #4CAF50; /* Green button */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    justify-content: end;
+}
+
+.add-btn:hover {
+    background-color: #45a049;
+}
+
+/* Transactions List */
+.transactions-list {
+    background-color: #1c1c1c;
+    padding: 20px;
+    border-radius: 10px;
+    max-height: 320px; 
+    overflow-y: auto; 
+}
+
+.header-transactions{
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+    top: 0; 
+    background-color: #1c1c1c;
+    z-index: 10; 
+}
+
+.transactions-list h3 {
+    margin-top: 0px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.transactions-list ul {
+    padding-left: 0px;
+}
+
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #333333;
+}
+
+.transaction-item:last-child {
+    border-bottom: none;
+}
+
+.transaction-info {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+    align-items: center;
+    gap: 10px;
+}
+
+.transaction-info span {
+    font-size: 16px;
+    flex: 1;
+}
+
+.transaction-info span:nth-child(2) {
+    flex: 1;
+    text-align: center;
+}
+
+.transaction-info span:nth-child(3) {
+    flex: 1;
+    text-align: right;
+}
+
+.delete-btn {
+    background-color: transparent;
+    border: 1px solid #E35F6F; /* Red delete button border */
+    color: #E35F6F;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-left: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.delete-btn:hover {
+    background-color: #E35F6F;
+    color: #ffffff;
+}
+
+.clear-all-btn {
+    background-color: #333333;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    padding: 5px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 32px;
+    transition: background-color 0.3s;
+}
+
+.clear-all-btn:hover {
+    background-color: #555555;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #45a049; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #3d8b40; 
+}
+
+@media (max-width: 768px) {
+    .header {
+        width: 100%;
+        display: block;
+    }
+
+    .header h1 {
+        padding-bottom: 15px;
+    }
+
+    .clear-all-btn {
+        height: 48px;
+    }
+
+    .transactions-list{
+        padding: 20px;
+    }
+
+    .balance-card {
+        order: 3; /* Make sure the balance card stays at the top */
+    }
+    .income-card {
+        order: 2; /* Income card will be second */
+    }
+    .expenses-card {
+        order: 1; /* Expenses card will be last */
+    }
+}
+
+@media (max-width: 430px) {
+    .add-btn{
+        width: 100px;
+    }
+}
