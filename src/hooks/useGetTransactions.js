@@ -7,6 +7,8 @@ export const useGetTransactions = () => {
 
     const [transactions, setTransactions] = useState([]);
     const [transactionTotal, setTransactionTotal] = useState({balance: 0.0, income:0.0, expenses: 0.0});
+    const [loading, setLoading] = useState(true);
+
 
     const transactionsCollection = collection(db , "transactions");
     const {userID} = useGetUserInfo()
@@ -41,10 +43,12 @@ export const useGetTransactions = () => {
                     expenses: totalExpenses,
                     income: totalIncome,
                 });
+                setLoading(false); // Set loading to false after data is fetched
 
             });
         } catch(err){
             console.log(err)
+            setLoading(false); // Set loading to false in case of error
         }
 
         return () => unsubscribe();
@@ -54,5 +58,5 @@ export const useGetTransactions = () => {
         getTransactions()
     },)
 
-    return{transactions, transactionTotal};
+    return{transactions, transactionTotal, loading};
 }

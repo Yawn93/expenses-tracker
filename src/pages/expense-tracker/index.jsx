@@ -8,17 +8,22 @@ import {auth} from "../../config/firebase-config";
 import { doc, deleteDoc, getDocs, writeBatch, collection } from "firebase/firestore";
 import { db } from "../../config/firebase-config"; 
 import './styles.css';
+import { ClipLoader } from 'react-spinners';
+import { css } from '@emotion/react';
+
 
 export const Expenses = () => {
 
-    const {addTransaction} = useAddTransaction();
-    const {transactions, transactionTotal} = useGetTransactions();
+    const {addTransaction, loading: addingTransaction} = useAddTransaction();
+    const {transactions, transactionTotal, loading: fetchingTransactions} = useGetTransactions();
     const {userName, profilePhoto} = useGetUserInfo();
     const navigate = useNavigate();
 
     const [description, setDescription] = useState("");
     const [transactionAmount, setTransactionAmount] = useState(0);
     const [transactionType, setTransactionType] = useState("expense");
+    const [deletingTransaction, setDeletingTransaction] = useState(false);
+    const [clearingAllTransactions, setClearingAllTransactions] = useState(false);
 
     const {balance, expenses, income} = transactionTotal
 
@@ -46,16 +51,20 @@ export const Expenses = () => {
     }
 
     const handleDeleteTransaction = async (id) => {
+        setDeletingTransaction(true);
         try {
             const transactionRef = doc(db, "transactions", id);
             await deleteDoc(transactionRef); // Delete from Firestore
             console.log(`Transaction with ID ${id} deleted successfully.`);
         } catch (error) {
             console.error("Error deleting transaction:", error);
+        } finally {
+            setDeletingTransaction(false);
         }
     };
     
     const handleClearAll = async () => {
+        setClearingAllTransactions(true);
         try {
             const transactionsSnapshot = await getDocs(collection(db, "transactions"));
             const batch = writeBatch(db);
@@ -68,12 +77,48 @@ export const Expenses = () => {
             console.log("All transactions cleared successfully.");
         } catch (error) {
             console.error("Error clearing all transactions:", error);
+        } finally {
+            setClearingAllTransactions(false);
         }
     };
+
+    const loaderStyle = css`
+    display: block;
+    margin: 0 auto;
+    border-color: red;
+`;
+
+const overlayStyle = css`
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+`;
     
 
     return (
         <div className="expense-tracker">
+            {addingTransaction && (
+                <div css={overlayStyle}>
+                    <ClipLoader css={loaderStyle} size={50} color={"#4CAF50"} />
+                </div>
+            )}
+            {deletingTransaction && (
+                <div css={overlayStyle}>
+                    <ClipLoader css={loaderStyle} size={50} color={"#4CAF50"} />
+                </div>
+            )}
+            {clearingAllTransactions && (
+                <div css={overlayStyle}>
+                    <ClipLoader css={loaderStyle} size={50} color={"#4CAF50"} />
+                </div>
+            )}
             {/* Header Section */}
             <header className="header">
                 <h1>{userName}'s Expense Tracker</h1>
@@ -156,27 +201,30 @@ export const Expenses = () => {
                     <h3>List of expenses/incomes</h3>
                     <button onClick={handleClearAll} className="clear-all-btn">Clear All</button>
                 </div>
-                <ul>
-                    {transactions.map((transaction) => (
-                        <li key={transaction.id} className="transaction-item">
-                            <div className="transaction-info">
-                                <span>{transaction.description}</span>
-                                <span style={{ color: transaction.transactionType === "expense" ? "#E35F6F" : "#45a049" }}>
-                                    {transaction.transactionType}
-                                </span>
-                                <span>{transaction.transactionAmount}€</span>
-                            </div>
-                            <button
-                                className="delete-btn"
-                                onClick={() => handleDeleteTransaction(transaction.id)}
-                            >
-                                x
-                            </button>
-                        </li>
-                    ))}
-                </ul>
+                {fetchingTransactions ? (
+                    <ClipLoader css={loaderStyle} size={50} color={"#ffffff"} />
+                ) : (
+                    <ul>
+                        {transactions.map((transaction) => (
+                            <li key={transaction.id} className="transaction-item">
+                                <div className="transaction-info">
+                                    <span>{transaction.description}</span>
+                                    <span style={{ color: transaction.transactionType === "expense" ? "#E35F6F" : "#45a049" }}>
+                                        {transaction.transactionType}
+                                    </span>
+                                    <span>{transaction.transactionAmount}€</span>
+                                </div>
+                                <button
+                                    className="delete-btn"
+                                    onClick={() => handleDeleteTransaction(transaction.id)}
+                                >
+                                    x
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                )}
             </div>
         </div>
     );
-    
 }
