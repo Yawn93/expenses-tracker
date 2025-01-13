@@ -3,7 +3,7 @@ name: Build and Deploy React App
 on:
   push:
     branches:
-      - main  # Triggers this workflow on push to the 'main' branch
+      - master  # Triggers this workflow on push to the 'master' branch
 
 jobs:
   build-and-deploy:
