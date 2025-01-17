@@ -58,7 +58,14 @@
     margin-bottom: 30px;
 }
 
-.balance-card, .income-card, .expenses-card {
+.divider {
+    border: 0;
+    height: 1px;
+    background: #333333; /* Light gray color */
+    margin: 20px 0; /* Adjust the margin as needed */
+}
+
+.balance-card, .income-card, .expenses-card, .pie-container, .add-transaction-form {
     flex: 1;
     background-color: #1c1c1c;
     padding: 20px;
@@ -80,17 +87,19 @@
 }
 
 /* Add Transaction Form */
-.add-transaction-form {
-    background-color: #1c1c1c;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 30px;
-}
 
 .add-transaction-form h3 {
     margin-top: 0;
     font-size: 20px;
     font-weight: bold;
+    text-align: left;
+}
+
+.description-text {
+    margin-bottom: 24px;
+    font-size: 16px;
+    color: #888888; /* Light gray text */
+    text-align: left;
 }
 
 .add-transaction-form form {

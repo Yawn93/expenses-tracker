@@ -10,7 +10,11 @@ import { db } from "../../config/firebase-config";
 import './styles.css';
 import { ClipLoader } from 'react-spinners';
 import { css } from '@emotion/react';
+import { Pie } from "react-chartjs-2";
+import { MDBContainer } from "mdbreact";
+import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
 
+Chart.register(ArcElement, Tooltip, Legend);
 
 export const Expenses = () => {
 
@@ -100,6 +104,21 @@ const overlayStyle = css`
     align-items: center;
     z-index: 1000;
 `;
+
+const data = {
+    labels: ["expenses", "income"],
+    datasets: [
+        {
+            data: [expenses, income],
+            backgroundColor: ["#4CAF50", "#B1E4B3"],
+        }
+    ]
+}
+
+const options = {
+    animation: false // Disable animation
+};
+
     
 
     return (
@@ -131,25 +150,29 @@ const overlayStyle = css`
                 )}
             </header>
     
-            {/* Balance and Summary Section */}
+            {/* Pie Chart */}
             <div className="summary-container">
-                <div className="balance-card">
-                    <h2 style={{ color: balance >= 0 ? "green" : "#E35F6F" }}>{balance}€</h2>
-                    <p>Balance</p>
+                <div className="pie-container">
+            <MDBContainer>
+                <Pie data={data} options={options}/>
+            </MDBContainer>
                 </div>
-                <div className="income-card">
+                <div className="balance-card">
+                    <h2 style={{ color: balance >= 0 ? "green" : "#E35F6F", fontSize: "48px" }}>{balance}€</h2>
+                    <p>Balance</p>
+                        <hr className="divider" />
                     <h2>{income}€</h2>
                     <p>Income</p>
-                </div>
-                <div className="expenses-card">
+                        <hr className="divider" />
                     <h2>{expenses}€</h2>
                     <p>Expenses</p>
                 </div>
-            </div>
-    
-            {/* Add Transaction Form */}
+                 {/* Add Transaction Form */}
             <div className="add-transaction-form">
                 <h3>Add a new expense/income</h3>
+                <p className="description-text">
+                    Use the form below to add a new expense or income to your tracker. Enter the name, amount, and select whether it is an expense or income.
+                </p>
                 <form onSubmit={onSubmit}>
                     <input
                         type="text"
@@ -194,6 +217,8 @@ const overlayStyle = css`
                     </div>
                 </form>
             </div>
+            </div>
+    
     
             {/* Transactions List Section */}
             <div className="transactions-list">
