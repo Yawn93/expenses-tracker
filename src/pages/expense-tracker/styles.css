@@ -154,7 +154,7 @@
 /* Transactions List */
 .transactions-list {
     background-color: #1c1c1c;
-    padding: 20px;
+    padding: 0px 20px 20px 20px;
     border-radius: 10px;
     max-height: 320px; 
     overflow-y: auto; 
@@ -166,11 +166,11 @@
     position: sticky;
     top: 0; 
     background-color: #1c1c1c;
-    z-index: 10; 
+    z-index: 100; 
 }
 
 .transactions-list h3 {
-    margin-top: 0px;
+    margin-top: 20px;
     font-size: 20px;
     font-weight: bold;
 }
@@ -239,6 +239,7 @@
     cursor: pointer;
     height: 32px;
     transition: background-color 0.3s;
+    margin-top: 20px;
 }
 
 .clear-all-btn:hover {
@@ -285,14 +286,8 @@
         padding: 20px;
     }
 
-    .balance-card {
-        order: 3; /* Make sure the balance card stays at the top */
-    }
-    .income-card {
-        order: 2; /* Income card will be second */
-    }
-    .expenses-card {
-        order: 1; /* Expenses card will be last */
+    .pie-container, .balance-card, .add-transaction-form{
+        width: 100%;
     }
 }
 
