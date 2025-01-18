@@ -1,3 +1,11 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    color: white;
+    font-family: "Work Sans", serif;
+  }
+
 .expense-tracker {
     max-width: 1200px;
     margin: 0 auto;
@@ -266,6 +274,103 @@
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #3d8b40; 
+}
+
+/* Toggle Switch */
+.theme-toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 20px;
+    margin-left: 10px;
+}
+
+.theme-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #4CAF50;
+}
+
+input:checked + .slider:before {
+    transform: translateX(14px);
+}
+
+/* Light Theme */
+.light-theme {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.light-theme .header {
+    background-color: #ffffff;
+}
+
+.light-theme .sign-out-btn{
+    color: #000000;
+    border: 1px solid #000000;
+}
+
+.light-theme .sign-out-btn:hover{
+    background-color: #ececec;
+}
+
+.light-theme .clear-all-btn {
+    color: #000000;
+    border: 1px solid #000000;
+    background-color: #f9f9f9;
+}
+
+.light-theme .clear-all-btn:hover{
+    background-color: #ececec;
+}
+
+.light-theme .balance-card, 
+.light-theme .income-card, 
+.light-theme .expenses-card, 
+.light-theme .pie-container, 
+.light-theme .add-transaction-form,
+.light-theme .transactions-list,
+.light-theme .header-transactions {
+    background-color: #f9f9f9;
+    color: #000000;
+}
+
+.light-theme .add-transaction-form input[type="text"],
+.light-theme .add-transaction-form input[type="number"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #333333;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    color: #000000;
 }
 
 @media (max-width: 768px) {

@@ -28,6 +28,7 @@ export const Expenses = () => {
     const [transactionType, setTransactionType] = useState("expense");
     const [deletingTransaction, setDeletingTransaction] = useState(false);
     const [clearingAllTransactions, setClearingAllTransactions] = useState(false);
+    const [isLightTheme, setIsLightTheme] = useState(false); 
 
     const {balance, expenses, income} = transactionTotal
 
@@ -119,10 +120,14 @@ const options = {
     animation: false // Disable animation
 };
 
+const toggleTheme = () => {
+    setIsLightTheme(!isLightTheme);
+};
+
     
 
     return (
-        <div className="expense-tracker">
+        <div className={`expense-tracker ${isLightTheme ? 'light-theme' : 'dark-theme'}`}>
             {addingTransaction && (
                 <div css={overlayStyle}>
                     <ClipLoader css={loaderStyle} size={50} color={"#4CAF50"} />
@@ -146,6 +151,10 @@ const options = {
                         <img className="profile-photo" src={profilePhoto} alt="Profile" />
                         <span>{userName}</span>
                         <button className="sign-out-btn" onClick={signUserOut}>Sign Out</button>
+                        <label className="theme-toggle">
+                            <input type="checkbox" onChange={toggleTheme} />
+                            <span className="slider"></span>
+                        </label>
                     </div>
                 )}
             </header>
